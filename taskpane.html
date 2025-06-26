@@ -1,20 +1,32 @@
 <!-- taskpane.html -->
-<div class="container">
-  <h3>Excel Currency Converter</h3>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Excel Currency Converter</title>
+  <link rel="stylesheet" href="taskpane.css" />
+</head>
+<body>
+  <div class="container">
+    <h3>Excel Currency Converter</h3>
 
-  <label>From Currency:</label>
-  <select id="fromCurrency">
-    <option>EUR</option><option>USD</option><option>SEK</option>
-  </select>
+    <label>From Currency:</label>
+    <select id="fromCurrency">
+      <option>EUR</option><option>USD</option><option>SEK</option>
+    </select>
 
-  <label>To Currency:</label>
-  <select id="toCurrency">
-    <option>USD</option><option>EUR</option><option>SEK</option>
-  </select>
+    <label>To Currency:</label>
+    <select id="toCurrency">
+      <option>USD</option><option>EUR</option><option>SEK</option>
+    </select>
 
-  <button id="convert">Convert</button>
-  <button id="restore">Restore original</button>
-</div>
+    <button id="convert">Convert</button>
+    <button id="restore">Restore original</button>
+  </div>
 
-<!--  NOTE the ?v=4  -->
-<script src="taskpane.js?v=4"></script>
+  <!-- Office.js must be loaded first -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <!-- Your add-in logic (cache-buster keeps browsers fresh) -->
+  <script src="taskpane.js?v=4"></script>
+</body>
+</html>
