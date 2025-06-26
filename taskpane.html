@@ -6,31 +6,33 @@
   <link rel="stylesheet" href="taskpane.css" />
 </head>
 <body>
-  <div class="container">
-    <h3>Excel Currency Converter</h3>
+  <div class="wrapper">
+    <h2 class="title">Currency Converter</h2>
 
-    <label>From Currency:</label>
-    <select id="fromCurrency">
-      <option>EUR</option>
-      <option>USD</option>
-      <option>SEK</option>
-      <option>GBP</option>  <!-- UK pound added -->
-    </select>
+    <div class="field">
+      <label for="fromCurrency">From currency</label>
+      <select id="fromCurrency" class="dropdown">
+        <option>EUR</option><option>USD</option>
+        <option>SEK</option><option>GBP</option>
+      </select>
+    </div>
 
-    <label>To Currency:</label>
-    <select id="toCurrency">
-      <option>USD</option>
-      <option>EUR</option>
-      <option>SEK</option>
-      <option>GBP</option>  <!-- UK pound added -->
-    </select>
+    <div class="field">
+      <label for="toCurrency">To currency</label>
+      <select id="toCurrency" class="dropdown">
+        <option>USD</option><option>EUR</option>
+        <option>SEK</option><option>GBP</option>
+      </select>
+    </div>
 
-    <button id="convert">Convert</button>
+    <button id="convert" class="btn">Convert</button>
+
+    <p class="note">Select cells with numbers, choose currencies, then press Convert.</p>
   </div>
 
   <!-- Office.js first -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <!-- Your logic (bump to v7 so browsers fetch the new file) -->
-  <script src="taskpane.js?v=7"></script>
+  <!-- Your logic (v8 cache-buster) -->
+  <script src="taskpane.js?v=8"></script>
 </body>
 </html>
