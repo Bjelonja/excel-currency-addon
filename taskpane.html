@@ -27,12 +27,20 @@
 
     <button id="convert" class="btn">Convert</button>
 
-    <p class="note">Select cells with numbers, choose currencies, then press Convert.</p>
+    <p class="note">
+      Select cells with numbers, choose currencies, then press Convert.
+    </p>
+
+    <!-- Fixed-size (60 × 60 px) Maersk logo -->
+    <img src="assets/maersk.png"
+         alt="Maersk logo"
+         width="60" height="60"
+         style="display:block;margin:12px auto;" />
   </div>
 
   <!-- Office.js first -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <!-- Your logic (v8 cache-buster) -->
-  <script src="taskpane.js?v=8"></script>
+  <!-- Your logic (cache-buster bumped to v9) -->
+  <script src="taskpane.js?v=9"></script>
 </body>
 </html>
