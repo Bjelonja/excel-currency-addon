@@ -1,37 +1,46 @@
+// taskpane.js  –  v2  (uses the exact selection)
 Office.onReady(() => {
-  document.getElementById("convert").onclick = convertCurrency;
+  document.getElementById("convert").addEventListener("click", convertCurrency);
 });
 
 async function convertCurrency() {
   try {
     await Excel.run(async (context) => {
-      const fromCurrency = document.getElementById("fromCurrency").value;
-      const toCurrency = document.getElementById("toCurrency").value;
-
-      // Get user's selected range
-      const range = context.workbook.getActiveCell().getEntireColumn().getUsedRange();
-      range.load("values, rowCount, columnIndex");
-
+      // 1. selected cells – not the whole column
+      const sel = context.workbook.getSelectedRange();
+      sel.load(["values", "rowCount", "columnCount"]);
       await context.sync();
 
-      // Fetch live exchange rate
-      const response = await fetch(`https://api.exchangerate.host/latest?base=${fromCurrency}&symbols=${toCurrency}`);
-      const data = await response.json();
-      const rate = data.rates[toCurrency];
+      // 2. currencies
+      const from = document.getElementById("fromCurrency").value;
+      const to   = document.getElementById("toCurrency").value;
 
-      // Calculate new values
-      const newValues = range.values.map(row => {
-        const num = parseFloat(row[0]);
-        return [isNaN(num) ? "N/A" : (num * rate).toFixed(2)];
-      });
+      // 3. live rate
+      const res   = await fetch(`https://api.exchangerate.host/latest?base=${from}&symbols=${to}`);
+      const json  = await res.json();
+      const rate  = json.rates[to];
 
-      // Insert values into next column
-      const nextColumn = range.getOffsetRange(0, 1);
-      nextColumn.values = newValues;
+      // 4. build converted matrix (preserves shape)
+      const out = sel.values.map(row =>
+        row.map(cell => {
+          const n = parseFloat(cell);
+          return isNaN(n) ? cell : (n * rate).toFixed(2);
+        })
+      );
+
+      // 5. write to the first empty column to the right of the selection
+      const dest = sel.getOffsetRange(0, sel.columnCount);
+      dest.values = out;
 
       await context.sync();
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error("Currency add-in error:", err);
+    // Optional: tiny in-sheet alert
+    OfficeRuntime.displayDialogAsync(
+      "about:blank",
+      { height: 20, width: 30, displayInIframe: true },
+      dlg => dlg.value.setHtml(`<p style='font-family:Arial;padding:12px'>Conversion failed:<br>${err.message}</p>`)
+    );
   }
 }
