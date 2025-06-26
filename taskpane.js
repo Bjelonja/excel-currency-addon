@@ -1,5 +1,6 @@
-// taskpane.js – v4  (overwrite + restore)
-let originalSnapshot = null;   // stores the very first selection’s raw values
+// taskpane.js – v5  (overwrite + full-range restore)
+let originalSnapshot = null;   // deep copy of the first converted range
+let originalAddress  = null;   // address of that range (e.g. "B3:D11")
 
 Office.onReady(() => {
   document.getElementById("convert").addEventListener("click", convertCurrency);
@@ -10,12 +11,13 @@ async function convertCurrency() {
   try {
     await Excel.run(async (context) => {
       const sel = context.workbook.getSelectedRange();
-      sel.load("values, address");              // address only for debug
+      sel.load("values, address");
       await context.sync();
 
-      // snapshot original values only once, the first time Convert is pressed
+      // Save snapshot only once (first Convert press)
       if (!originalSnapshot) {
-        originalSnapshot = sel.values.map(row => row.slice());
+        originalSnapshot = sel.values.map(row => row.slice()); // deep copy
+        originalAddress  = sel.address;
       }
 
       const from = document.getElementById("fromCurrency").value;
@@ -29,7 +31,7 @@ async function convertCurrency() {
       }
       const rate = data.rates[to];
 
-      // overwrite selected cells with converted numbers
+      // Overwrite selected cells with converted numbers
       sel.values = sel.values.map(row =>
         row.map(cell => {
           const n = parseFloat(cell);
@@ -45,14 +47,16 @@ async function convertCurrency() {
 }
 
 async function restoreOriginal() {
-  if (!originalSnapshot) {
+  if (!originalSnapshot || !originalAddress) {
     console.warn("Nothing to restore – no conversion done yet.");
     return;
   }
   try {
     await Excel.run(async (context) => {
-      const sel = context.workbook.getSelectedRange();
-      sel.values = originalSnapshot;
+      const sheet = context.workbook.worksheets.getActiveWorksheet();
+      const rng   = sheet.getRange(originalAddress);
+      rng.values  = originalSnapshot;   // restore full block
+      rng.select();                     // optional: re-select it
       await context.sync();
     });
   } catch (err) {
