@@ -1,0 +1,28 @@
+.container {
+  padding: 15px;
+  font-family: Arial, sans-serif;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+select, button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 6px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005a9e;
+}
