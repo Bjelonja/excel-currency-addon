@@ -11,12 +11,18 @@
 
     <label>From Currency:</label>
     <select id="fromCurrency">
-      <option>EUR</option><option>USD</option><option>SEK</option>
+      <option>EUR</option>
+      <option>USD</option>
+      <option>SEK</option>
+      <option>GBP</option>  <!-- UK pound added -->
     </select>
 
     <label>To Currency:</label>
     <select id="toCurrency">
-      <option>USD</option><option>EUR</option><option>SEK</option>
+      <option>USD</option>
+      <option>EUR</option>
+      <option>SEK</option>
+      <option>GBP</option>  <!-- UK pound added -->
     </select>
 
     <button id="convert">Convert</button>
@@ -24,7 +30,7 @@
 
   <!-- Office.js first -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <!-- Your logic (v6 cache-buster) -->
-  <script src="taskpane.js?v=6"></script>
+  <!-- Your logic (bump to v7 so browsers fetch the new file) -->
+  <script src="taskpane.js?v=7"></script>
 </body>
 </html>
