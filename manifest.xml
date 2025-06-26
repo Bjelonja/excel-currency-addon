@@ -13,7 +13,8 @@
     <Host Name="Workbook" />
   </Hosts>
   <DefaultSettings>
-        <SourceLocation DefaultValue="https://Bjelonja.github.io/excel-currency-addon/taskpane.html"/>
+        <SourceLocation
+    DefaultValue="https://bjelonja.github.io/excel-currency-addon/taskpane.html?v=4"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
 </OfficeApp>
