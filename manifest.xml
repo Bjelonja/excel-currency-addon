@@ -8,7 +8,6 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Currency Converter" />
   <Description DefaultValue="Convert currencies in Excel" />
-  <IconUrl DefaultValue="https://yourdomain.com/icon.png" />
   <Hosts>
     <Host Name="Workbook" />
   </Hosts>
